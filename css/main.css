@@ -1,0 +1,15 @@
+div > img {
+  width: auto;
+  height : auto;
+  max-height: 80%;
+  max-width: 80%;
+}
+
+a{
+	font-size: 30;
+	color: #D9B3B3;
+}
+
+li > h2{
+	background: #A3D1D1;
+}

@@ -1,0 +1,72 @@
+<html>
+
+<head>
+  <meta charset=utf-8>
+  <title>高雄藝文</title>
+  <!-- install jQuery by CDN(Content Delivery Network) from Google -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+  <!-- install bootstrap by CDN -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+  <!-- install fontawesome by CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- css 路徑設定 -->
+    <link rel="stylesheet" href="./css/main.css">
+
+  <!-- javascript 路徑設定 -->
+    <script src="./js/main.js"></script>
+</head>
+
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class=navbar-inner>
+      <div class=container>
+        </button> <a class=brand href=#>高雄市藝文展覽</a>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <div id="content" class="container"></div>
+
+    <footer>
+      <p>&copy; NCCU 陳思妤</footer>
+  <script>
+  $(document).ready(function() {
+      getData(function(err, data) {
+        if(err) {
+          console.log(err);
+        }
+        else {
+          var JSONartList = JSON.parse(data);
+          var HTMLartList = JSONartList.map(function(art_event) {
+            var HTMLString = "<li class='list-group-item'><h2>"+art_event.PUBART_TITLE+"</h2>";
+            var attributes = "";
+            for (var key in art_event) {
+              if(key=="PUBART_DESC"||key=="PUBART_TOPDATE"||key=="PUBART_ENDDATE"){
+                attributes +="<div>"+ key.replace("PUBART_","") + "：" + art_event[key]+"</div><br>";
+              }
+              if(key=="PUBART_IMAGE"){
+                attributes +="<div>"+"<img src="+art_event[key]+"></div></li>";
+              }
+            }
+            var HTMLString = HTMLString + attributes;
+            return HTMLString;
+          });
+          HTMLartList.forEach(function(html) {
+            $(html).appendTo("#content");
+          });
+           // $('#loading').css('display','none');
+        }
+      });
+    });
+  </script>
+
+</html>
